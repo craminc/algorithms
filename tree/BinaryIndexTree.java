@@ -1,7 +1,7 @@
 package tree;
 
 /**
- * BIT use to update an interval and find the minimum value of an interval with o(logn) time complexity
+ * BIT use to update an interval and find the sum of an interval with o(logn) time complexity
  */
 public class BinaryIndexTree {
 

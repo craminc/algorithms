@@ -22,17 +22,22 @@ public class SegmentTree {
         // why need 4 multiple size array
         this.nodes = new int[nums.length * 4];
         this.lazy = new int[nums.length * 4];
+        // root node idx
         build(nums, 1, 0, nums.length - 1);
     }
 
     private void build(int[] nums, int idx, int left, int right) {
         if (left == right) {
+            // section have only one node
             nodes[idx - 1] = nums[left];
             return;
         }
         int mid = left + right >> 1;
+        // left subtree
         build(nums, idx * 2, left, mid);
+        // right subtree
         build(nums, idx * 2 + 1, mid + 1, right);
+        // set current node val
         pushUp(idx);
     }
 
@@ -100,10 +105,11 @@ public class SegmentTree {
     }
 
     /**
-     * add dif t0 nums[i, j] and update tree node lazily
+     * add dif to nums[i, j] and update tree node lazily
      */
     public void updateInterval(int i, int j, int dif) {
-        for (int idx = i; idx <= j && idx < nums.length; idx++) nums[idx] += dif;
+        for (int idx = i; idx <= j && idx < nums.length; idx++)
+            nums[idx] += dif;
         update(i, j, 1, dif, 0, this.nums.length - 1);
     }
 
@@ -120,9 +126,11 @@ public class SegmentTree {
         int max = -1;
         pushDown(idx);
         if (i <= mid) {
+            // find in left subtree
             max = Math.max(max, query(i, j, idx * 2, left, mid));
         }
         if (j > mid) {
+            // find in right subtree
             max = Math.max(max, query(i, j, idx * 2 + 1, mid + 1, right));
         }
         return max;
@@ -130,7 +138,7 @@ public class SegmentTree {
 
     public static void main(String[] args) {
         // init
-        SegmentTree st = new SegmentTree(new int[]{1, 8, 6, 4, 3, 5});
+        SegmentTree st = new SegmentTree(new int[]{1, 2, 3, 4,5,6,7,8,9,10});
         System.out.println(Arrays.toString(st.nodes));
         PrintTree.print(Arrays.stream(st.nodes).boxed().toArray());
 
